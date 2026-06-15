@@ -1,39 +1,49 @@
 class LoginPage {
 
-    visit() {
-        cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
 
-        cy.get('input[name="username"]', {
-            timeout: 30000
-        }).should('be.visible')
-    }
+visit() {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
 
-    inputUsername(username) {
-        cy.get('input[name="username"]')
-            .should('be.visible')
-            .clear()
-            .type(username)
-    }
+    cy.get('input[name="username"]', {
+        timeout: 30000
+    }).should('be.visible')
+}
 
-    inputPassword(password) {
-        cy.get('input[name="password"]')
-            .should('be.visible')
-            .clear()
-            .type(password)
-    }
+inputUsername(username) {
+    cy.get('input[name="username"]')
+        .clear()
+        .type(username)
+}
 
-    clickLogin() {
-        cy.get('button[type="submit"]').click()
-    }
+inputPassword(password) {
+    cy.get('input[name="password"]')
+        .clear()
+        .type(password)
+}
 
-    login(username, password) {
-        this.inputUsername(username)
-        this.inputPassword(password)
-        this.clickLogin()
+clickLogin() {
+    cy.get('button[type="submit"]').click()
+}
 
-        cy.url({ timeout: 30000 })
-            .should('include', '/dashboard')
-    }
+login(username, password) {
+    this.inputUsername(username)
+    this.inputPassword(password)
+    this.clickLogin()
+}
+
+logout() {
+    cy.get('.oxd-userdropdown-tab', {
+        timeout: 10000
+    })
+    .should('be.visible')
+    .click()
+
+    cy.contains('a', 'Logout')
+        .should('be.visible')
+        .click()
+}
+
+
 }
 
 export default new LoginPage()

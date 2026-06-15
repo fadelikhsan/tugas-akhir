@@ -5,29 +5,54 @@ describe('Directory Feature', () => {
 
     beforeEach(() => {
 
-        cy.intercept('GET', '**/directory/**').as('directory')
-
         LoginPage.visit()
         LoginPage.login('Admin', 'admin123')
 
         DirectoryPage.openDirectory()
-
-        cy.wait('@directory')
+        DirectoryPage.verifyDirectoryPage()
     })
 
-    it('TC01 Open menu Directory', () => {})
+    it('TC01 Open menu Directory', () => {
+        DirectoryPage.verifyDirectoryPage()
+    })
 
-    it('TC02 Search employee name', () => {})
+    it('TC02 Search employee name', () => {
+        DirectoryPage.searchName('Linda')
+        DirectoryPage.clickSearch()
 
-    it('TC03 Search partial name', () => {})
+        DirectoryPage.verifyPageLoaded()
+    })
 
-    it('TC04 Reset search', () => {})
+    it('TC03 Search partial name', () => {
+        DirectoryPage.searchName('Lin')
+        DirectoryPage.clickSearch()
 
-    it('TC05 Search data kosong', () => {})
+        DirectoryPage.verifyPageLoaded()
+    })
 
-    it('TC06 Verify search button', () => {})
+it('TC04 Reset search', () => {
+    DirectoryPage.searchName('Linda')
+    DirectoryPage.clickReset()
 
-    it('TC07 Verify reset button', () => {})
+    DirectoryPage.verifyPageLoaded()
+})
 
-    it('TC08 Verify list records tampil', () => {})
+    it('TC05 Search data kosong', () => {
+        DirectoryPage.searchName('abcdefgh12345')
+        DirectoryPage.clickSearch()
+
+        DirectoryPage.verifyPageLoaded()
+    })
+
+    it('TC06 Verify search button', () => {
+        DirectoryPage.verifySearchButton()
+    })
+
+    it('TC07 Verify reset button', () => {
+        DirectoryPage.verifyResetButton()
+    })
+
+    it('TC08 Verify list records tampil', () => {
+        DirectoryPage.verifyRecordsDisplayed()
+    })
 })
