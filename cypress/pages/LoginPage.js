@@ -1,20 +1,25 @@
 class LoginPage {
 
-visit() {
-    cy.visit(
-        'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login',
-        {
-            timeout: 120000
-        }
-    )
-}
+    visit() {
+        cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+
+        cy.get('input[name="username"]', {
+            timeout: 30000
+        }).should('be.visible')
+    }
 
     inputUsername(username) {
-        cy.get('input[name="username"]').clear().type(username)
+        cy.get('input[name="username"]')
+            .should('be.visible')
+            .clear()
+            .type(username)
     }
 
     inputPassword(password) {
-        cy.get('input[name="password"]').clear().type(password)
+        cy.get('input[name="password"]')
+            .should('be.visible')
+            .clear()
+            .type(password)
     }
 
     clickLogin() {
@@ -25,6 +30,9 @@ visit() {
         this.inputUsername(username)
         this.inputPassword(password)
         this.clickLogin()
+
+        cy.url({ timeout: 30000 })
+            .should('include', '/dashboard')
     }
 }
 

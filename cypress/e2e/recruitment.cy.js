@@ -5,29 +5,60 @@ describe('Recruitment Feature', () => {
 
     beforeEach(() => {
 
-        cy.intercept('GET', '**/recruitment/**').as('recruitment')
-
         LoginPage.visit()
-        LoginPage.login('Admin', 'admin123')
+
+        LoginPage.login(
+            'Admin',
+            'admin123'
+        )
 
         RecruitmentPage.openRecruitment()
 
-        cy.wait('@recruitment')
+        RecruitmentPage.verifyRecruitmentPage()
     })
 
-    it('TC01 Open recruitment menu', () => {})
+    it('TC01 Open recruitment menu', () => {
+        RecruitmentPage.verifyRecruitmentPage()
+    })
 
-    it('TC02 Search candidate', () => {})
+    it('TC02 Search candidate', () => {
+        RecruitmentPage.searchCandidate('Peter')
+        RecruitmentPage.verifySearchResult()
+    })
 
-    it('TC03 Search vacancy', () => {})
+    it('TC03 Search vacancy', () => {
+        RecruitmentPage.searchVacancy()
+        RecruitmentPage.verifySearchResult()
+    })
 
-    it('TC04 Search hiring manager', () => {})
+    it('TC04 Search hiring manager', () => {
+        RecruitmentPage.searchHiringManager()
+        RecruitmentPage.verifySearchResult()
+    })
 
-    it('TC05 Reset filter', () => {})
+    it('TC05 Reset filter', () => {
+        RecruitmentPage.searchCandidate('Peter')
+        RecruitmentPage.resetFilter()
+        RecruitmentPage.verifyFilterReset()
+    })
 
-    it('TC06 Open add candidate page', () => {})
+    it('TC06 Open add candidate page', () => {
+        RecruitmentPage.openAddCandidate()
+        RecruitmentPage.verifyAddCandidatePage()
+    })
 
-    it('TC07 Validate mandatory field', () => {})
+    it('TC07 Validate mandatory field', () => {
+        RecruitmentPage.openAddCandidate()
+        RecruitmentPage.saveCandidate()
+        RecruitmentPage.verifyRequiredMessage()
+    })
 
-    it('TC08 Save candidate data', () => {})
+    it('TC08 Save candidate data', () => {
+        RecruitmentPage.openAddCandidate()
+        RecruitmentPage.fillCandidateForm(
+            'John',
+            'Doe'
+        )
+        RecruitmentPage.saveCandidate()
+    })
 })
